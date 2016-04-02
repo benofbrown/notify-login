@@ -44,7 +44,7 @@ notify_login() {
 
   local SUBJECT_HOST
   local FQDN=$($CMD_HOSTNAME -f)
-  if [ "$USE_FULL_HOSTNAME" == yes ]; then
+  if [ "$USE_FULL_HOSTNAME" = yes ]; then
     SUBJECT_HOST="$FQDN"
   else
     SUBJECT_HOST=$($CMD_HOSTNAME -s)
