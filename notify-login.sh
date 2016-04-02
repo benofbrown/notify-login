@@ -28,8 +28,11 @@ notify_login() {
   # Valid values are 'yes' or 'no'
   local USE_FULL_HOSTNAME=yes
 
-
   #### End Configuration ####
+
+  # Don't notify for screen/tmux sessions
+  [ -n "$SCREEN" ] && return
+  [ -n "$TMUX" ] && return
 
   # PATHS. Shouldn't need to change these.
   local CMD_MAILX=/usr/bin/mailx
@@ -65,7 +68,7 @@ notify_login() {
 To: <$MAILTO>
 From: <root@$FQDN>
 
-User $USER logged in ${REMOTEIP}$CMD_TTY
+User $USER logged in ${REMOTEIP}$USERTTY
 EOF
     return
   fi
