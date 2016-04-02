@@ -81,7 +81,7 @@ EOF
     ppid=${pdata% *}
   done
 
-  local REMOTEIP="from $(
+  local REMOTEIP=" from $(
     $CMD_TR '\000' '\n' < /proc/$ppid/environ \
     | while IFS='=' read -r k v; do
       if [ "$k" = "SSH_CONNECTION" ]; then
@@ -100,7 +100,7 @@ EOF
   else
     local USERTTY=$($CMD_PS -o tty= $ppid)
     $CMD_CAT <<EOF | $CMD_MAILX -s "$SUBJECT" "$MAILTO"
-User $puser escalated to root in on $TTY
+User $puser on $USERTTY escalated to root$REMOTEIP
 EOF
   fi
 }
