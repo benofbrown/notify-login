@@ -65,9 +65,6 @@ notify_login() {
     fi
 
     $CMD_CAT <<EOF | $CMD_MAILX -s "$SUBJECT" "$MAILTO"
-To: <$MAILTO>
-From: <root@$FQDN>
-
 User $USER logged in ${REMOTEIP}$USERTTY
 EOF
     return
@@ -98,17 +95,11 @@ EOF
   if [ $ppid -eq 1 ]; then
     local USERTTY=$($CMD_TTY 2>&1)
     $CMD_CAT <<EOF | $CMD_MAILX -s "$SUBJECT" "$MAILTO"
-To: <$MAILTO>
-From: <root@$FQDN>
-
 User root logged in on $USERTTY
 EOF
   else
     local USERTTY=$($CMD_PS -o tty= $ppid)
     $CMD_CAT <<EOF | $CMD_MAILX -s "$SUBJECT" "$MAILTO"
-To: <$MAILTO>
-From: <root@$FQDN>
-
 User $puser escalated to root in on $TTY
 EOF
   fi
